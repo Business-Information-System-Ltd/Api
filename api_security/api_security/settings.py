@@ -28,7 +28,11 @@ DEBUG = False
 
 STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
 STATIC_URL = '/static/'
-ALLOWED_HOSTS = ['apisecurity-ahabeuhfaqc6h7e0.centralus-01.azurewebsites.net']
+ALLOWED_HOSTS = [
+    'apisecurity-ahabeuhfaqc6h7e0.centralus-01.azurewebsites.net',
+    'localhost',
+    '127.0.0.1',
+]
 
 
 # Application definition
@@ -45,6 +49,7 @@ INSTALLED_APPS = [
     'security',
     'django_extensions',
     'oauth2_provider',
+    'corsheaders',
     
 ]
 
@@ -63,9 +68,15 @@ MIDDLEWARE = [
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'
 CORS_ORIGIN_ALLOW_ALL = True
+CORS_ALLOWED_ORIGINS = [
+    "http://localhost:3000",
+    "http://127.0.0.1:8000",
+]
 REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':(
-        'security.authentication.GlobalAPIKeyAuthentication',
+        #'security.authentication.GlobalAPIKeyAuthentication',
+        #'rest_framework.authentication.SessionAuthentication',
+        
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
      'DEFAULT_PERMISSION_CLASSES': (
