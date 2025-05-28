@@ -8,7 +8,12 @@ from .models import Budget
 from rest_framework import viewsets
 
 
+@api_view(['GET'])
+@permission_classes([IsAuthenticated])
+def protected_view(request):
+    return Response({"message": "Hello, you are authenticated!"})
 
+    
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def profile_view(request):
