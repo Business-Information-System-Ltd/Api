@@ -7,5 +7,6 @@ router.register(r'budget', BudgetViewSet, basename='budget')
 
 urlpatterns = [
     path('profile/', profile_view, name='profile'),
-    path('', include(router.urls)),  # include the router URLs
+    path('', include(router.urls)),  
+    path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
 ]
