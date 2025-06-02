@@ -88,10 +88,11 @@ REST_FRAMEWORK = {
 }
 ROOT_URLCONF = 'api_security.urls'
 
+BASE_DIR = Path(__file__).resolve().parent.parent
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [],
+        'DIRS': [os.path.join(BASE_DIR, 'templates')],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -102,6 +103,7 @@ TEMPLATES = [
         },
     },
 ]
+LOGIN_REDIRECT_URL = '/'
 
 WSGI_APPLICATION = 'api_security.wsgi.application'
 

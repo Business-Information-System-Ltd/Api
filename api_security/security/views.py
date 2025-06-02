@@ -41,5 +41,10 @@ def budget_view(request):
     return Response({"detail": "Method not allowed."}, status=status.HTTP_405_METHOD_NOT_ALLOWED)
 
 
+    def callback_view(request):
+        code = request.GET.get('code')
+        return HttpResponse(f"Authorization Code: {code}")
+
+
 
 

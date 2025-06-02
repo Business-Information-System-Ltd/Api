@@ -17,6 +17,7 @@ Including another URLconf
 from django.contrib import admin
 from django.urls import path,include
 from django.views.decorators.csrf import csrf_exempt
+from django.contrib.auth import views as auth_views
 from security.views import protected_view
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
@@ -29,5 +30,5 @@ urlpatterns = [
     path('api/token/', csrf_exempt(TokenObtainPairView.as_view()),name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(),name='token_refresh'),
     path('api/protected/', protected_view, name='protected'),
-
+    path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
 ]
