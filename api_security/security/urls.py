@@ -16,6 +16,7 @@ router.register(r'budget', BudgetViewSet, basename='budget')
 
 urlpatterns = [
     path('profile/', profile_view, name='profile'),
+    # path('register/', register_user, name='register-user'),
     path('', include(router.urls)),  
     path('o/', include('oauth2_provider.urls', namespace='oauth2_provider')),
     path('oauth/callback/', oauth_callback),
