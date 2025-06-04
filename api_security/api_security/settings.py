@@ -37,6 +37,7 @@ CSRF_TRUSTED_ORIGINS = [
     "https://apisecurity-ahabeuhfaqc6h7e0.centralus-01.azurewebsites.net"
 ]
 
+AUTH_USER_MODEL ='security.CustomerUser'
 
 # Application definition
 
@@ -53,6 +54,7 @@ INSTALLED_APPS = [
     'django_extensions',
     'oauth2_provider',
     'corsheaders',
+    
     
 ]
 
@@ -81,7 +83,7 @@ REST_FRAMEWORK = {
     'DEFAULT_AUTHENTICATION_CLASSES':(
         #'security.authentication.GlobalAPIKeyAuthentication',
         #'rest_framework.authentication.SessionAuthentication',
-        
+        'oauth2_provider.contrib.rest_framework.OAuth2Authentication',
         'rest_framework_simplejwt.authentication.JWTAuthentication',
     ),
      'DEFAULT_PERMISSION_CLASSES': (

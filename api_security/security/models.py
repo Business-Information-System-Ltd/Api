@@ -1,4 +1,6 @@
 from django.db import models
+from django.contrib.auth.models import AbstractUser
+
 
 
 class ApiKey(models.Model):
@@ -16,3 +18,14 @@ class Budget(models.Model):
 
     def __str__(self):
         return f"{self.Budget_code} - {self.Budget_name}"
+
+class CustomerUser(AbstractUser):
+    ROLE_CHOICES = (
+        ('admin','admin'),
+        ('staff','staff'),
+        ('manager','manager'),
+    )
+    role = models.CharField(max_length=20, choices=ROLE_CHOICES, default='staff')
+
+    def __str__(self):
+        return self.username

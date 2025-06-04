@@ -30,7 +30,11 @@ def profile_view(request):
     if request.method == 'GET':
         users=User.objects.all()
         serializer = UserSerializer(users, many=True)
-        return Response(serializer.data)
+        return Response({
+            "username": user.username,
+            "email": user.email,
+            "role": user.role  
+        })
 
     elif request.method == 'POST':
         serializer = UserSerializer(data=request.data)
