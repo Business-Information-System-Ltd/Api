@@ -5,12 +5,28 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from rest_framework import status
 from .serializers import UserSerializer,BudgetSerializer
-from .models import Budget
+from .models import Budget, CustomerUser
 from rest_framework import viewsets
 from rest_framework.permissions import AllowAny
+from .permissions import IsAdmin, IsManager, IsStaff
 
 
+@api_view(['GET'])
+@permission_classes([IsAdmin])
+def admin_only_view(request):
+    return Response({"message": "Hello Admin"})
 
+@api_view(['GET'])
+@permission_classes([IsManager])
+def manager_only_view(request):
+    return Response({"message": "Hello Manager!"})
+
+@api_view(['GET'])
+@permission_classes([IsStaff])
+def staff_only_view(request):
+    return Response({"message": "Hello Staff!"})
+
+    
 @api_view(['GET'])
 @permission_classes([IsAuthenticated])
 def protected_view(request):
@@ -24,23 +40,22 @@ def protected_view(request):
 #     return Response(serializer.data)
 
     
-@api_view(['GET','POST'])
+@api_view(['GET', 'POST'])
 @permission_classes([IsAuthenticated])
 def profile_view(request):
     if request.method == 'GET':
-        users=User.objects.all()
+        #user = request.user 
+        #user=user.objects.all(),
+        users = CustomerUser.objects.all()
+
         serializer = UserSerializer(users, many=True)
-        return Response({
-            "username": user.username,
-            "email": user.email,
-            "role": user.role  
-        })
+        return Response(serializer.data)  # Return serialized user data
 
     elif request.method == 'POST':
         serializer = UserSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.save()
-            user.set_password(serializer.validated_data['password'])  # Ensure password is hashed
+            user.set_password(serializer.validated_data['password'])  # hash password
             user.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)

@@ -10,6 +10,7 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/5.2/ref/settings/
 """
 import os
+from django.conf import settings
 
 from pathlib import Path
 
@@ -36,8 +37,7 @@ ALLOWED_HOSTS = [
 CSRF_TRUSTED_ORIGINS = [
     "https://apisecurity-ahabeuhfaqc6h7e0.centralus-01.azurewebsites.net"
 ]
-
-AUTH_USER_MODEL ='security.CustomerUser'
+AUTH_USER_MODEL = 'security.CustomerUser' 
 
 # Application definition
 
@@ -51,6 +51,7 @@ INSTALLED_APPS = [
     'rest_framework',
     'rest_framework_simplejwt',
     'security',
+    'api_security',
     'django_extensions',
     'oauth2_provider',
     'corsheaders',
@@ -69,6 +70,16 @@ MIDDLEWARE = [
     'django.middleware.clickjacking.XFrameOptionsMiddleware',
     'whitenoise.middleware.WhiteNoiseMiddleware',
 ]
+OAUTH2_PROVIDER = {
+    'ACCESS_TOKEN_MODEL': 'oauth2_provider.AccessToken',
+    'APPLICATION_MODEL': 'oauth2_provider.Application',
+    'REFRESH_TOKEN_MODEL': 'oauth2_provider.RefreshToken',
+}
+
+OAUTH2_PROVIDER_ACCESS_TOKEN_MODEL = 'oauth2_provider.AccessToken'
+OAUTH2_PROVIDER_APPLICATION_MODEL = 'oauth2_provider.Application'
+OAUTH2_PROVIDER_REFRESH_TOKEN_MODEL = 'oauth2_provider.RefreshToken'
+OAUTH2_PROVIDER_ID_TOKEN_MODEL = 'oauth2_provider.IDToken'  # or None if unused
 
 
 STATICFILES_STORAGE = 'whitenoise.storage.CompressedManifestStaticFilesStorage'

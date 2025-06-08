@@ -19,6 +19,7 @@ from django.urls import path,include
 from django.views.decorators.csrf import csrf_exempt
 from django.contrib.auth import views as auth_views
 from security.views import protected_view
+from security.views import admin_only_view, manager_only_view, staff_only_view
 from rest_framework_simplejwt.views import (
     TokenObtainPairView,
     TokenRefreshView,
@@ -30,5 +31,8 @@ urlpatterns = [
     path('o/token/', csrf_exempt(TokenObtainPairView.as_view()),name='token_obtain_pair'),
     path('api/token/refresh/', TokenRefreshView.as_view(),name='token_refresh'),
     path('api/protected/', protected_view, name='protected'),
+    path('api/admin/dashboard/', admin_only_view),
+    path('api/manager/dashboard/', manager_only_view),
+    path('api/staff/dashboard/', staff_only_view),
     path('accounts/login/', auth_views.LoginView.as_view(), name='login'),
 ]
